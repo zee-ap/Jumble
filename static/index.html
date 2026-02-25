@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/style.css">
+  <title>JumbleV2</title>
+</head>
+<body>
+  <div id="mainmenu">
+
+    <!-- ================= MAIN MENU ================= -->
+    <div id="menu" class="">
+      <h1>Jumble</h1>
+      <p>Guess The Word</p>
+
+      <div class="menu-btn-wrap">
+        <button class="menu-btn" id="btn-daily">Word of the Day</button>
+      </div>
+
+      <div class="menu-btn-wrap" id="competition-wrap">
+        <button class="menu-btn" id="btn-competition">Competition Mode</button>
+        <div class="hover-desc" id="desc-competition">
+          Play against friends in Duel mode (1v1).
+        </div>
+      </div>
+
+      <div id="menu-message" class="menu-message"></div>
+    </div>
+
+    <!-- ================= COMPETITION MENU ================= -->
+    <div id="screen-competition" class="hidden">
+      <h1>Competition Mode</h1>
+
+      <div class="menu-btn-wrap" id="duel-wrap">
+        <button class="menu-btn" id="btn-duel">Duel</button>
+        <div class="hover-desc">
+          1v1 mode. Sprint Battle or Point Battle.
+        </div>
+      </div>
+
+      <div class="menu-btn-wrap" id="join-wrap">
+        <button class="menu-btn" id="btn-join-room">Join a Room</button>
+        <div class="hover-desc">
+          Enter a room code to join a Duel match.
+        </div>
+      </div>
+
+      <button class="back-btn" id="btn-comp-back">Back</button>
+    </div>
+
+    <!-- ================= DUEL MENU ================= -->
+    <div id="screen-duel" class="hidden">
+      <h1>Duel</h1>
+
+      <div class="menu-btn-wrap">
+        <button class="menu-btn" id="btn-sprint">Sprint Battle</button>
+        <div class="always-desc">
+          Race to 3 solves. Same word sequence for both players. First to reach 3 solves wins.
+        </div>
+      </div>
+
+      <div class="menu-btn-wrap">
+        <button class="menu-btn" id="btn-point">Point Battle</button>
+        <div class="always-desc">
+          Best of 3 rounds. Same word sequence for both players. Points depend on attempts per round.
+        </div>
+      </div>
+
+      <button class="back-btn" id="btn-duel-back">Back</button>
+    </div>
+
+    <!-- ================= CREATE ROOM (DUEL) ================= -->
+    <div id="screen-create-room" class="hidden">
+      <h1>Create Room</h1>
+
+      <div class="info-box" id="create-room-summary"></div>
+
+      <div class="form-wrap">
+        <label class="form-label" for="create-name">Your name</label>
+        <input class="form-input" id="create-name" type="text" maxlength="16" placeholder="Enter your name" />
+      </div>
+
+      <div class="menu-btn-wrap">
+        <button class="menu-btn" id="btn-create-room">Create Room</button>
+      </div>
+
+      <button class="back-btn" id="btn-create-back">Back</button>
+    </div>
+
+    <!-- ================= WAITING ROOM (DUEL) ================= -->
+    <div id="screen-waiting-room" class="hidden">
+      <h1>Waiting Room</h1>
+
+      <div class="info-box" id="waiting-greeting"></div>
+
+      <div class="code-box">
+        Room Code: <span id="waiting-room-code"></span>
+      </div>
+
+      <div class="rules-box" id="waiting-rules"></div>
+
+      <div class="info-box subtle" id="waiting-status">
+        Waiting for players…
+      </div>
+
+      <div class="players-box">
+        <div class="players-title">Players</div>
+        <ul class="players-list" id="players-list"></ul>
+      </div>
+
+      <!-- ✅ CHANGED: Start Match -> Ready -->
+      <button class="menu-btn disabled" id="btn-start-match" disabled>Ready</button>
+
+      <button class="back-btn" id="btn-waiting-back">Back</button>
+    </div>
+
+    <!-- ================= JOIN ROOM ================= -->
+    <div id="screen-join-room" class="hidden">
+      <h1>Join a Room</h1>
+
+      <div class="info-box">
+        Enter your name + the room code your friend sends you.
+      </div>
+
+      <div class="form-wrap">
+        <label class="form-label" for="join-name">Your name</label>
+        <input class="form-input" id="join-name" type="text" maxlength="16" placeholder="Enter your name" />
+      </div>
+
+      <div class="form-wrap">
+        <label class="form-label" for="join-code">Room code</label>
+        <input class="form-input" id="join-code" type="text" maxlength="10" placeholder="ABC123" />
+      </div>
+
+      <div class="menu-btn-wrap">
+        <button class="menu-btn" id="btn-join-submit">Join</button>
+      </div>
+
+      <button class="back-btn" id="btn-join-back">Back</button>
+    </div>
+
+    <!-- ================= MULTIPLAYER GAME ================= -->
+    <div id="screen-multiplayer" class="hidden">
+      <h1 id="mp-title">Match</h1>
+      
+      <div class="info-box subtle" id="mp-status">Connecting…</div>
+      <div class="players-box">
+        <div class="players-title">Scoreboard</div>
+        <ul class="players-list" id="mp-scoreboard"></ul>
+      </div>
+      <div class="divider"></div>
+      
+      <div id="mp-grid" class="board-grid"></div>
+      
+      <div id="mp-messages" class="board-messages"></div>
+      <div id="mp-keyboard" class="board-keyboard">
+        <div id="mp-kb-row-1"></div>
+        <div id="mp-kb-row-2"></div>
+        <div id="mp-kb-row-3"></div>
+      </div>
+      <div id="mp-countdown" class="countdown-overlay">
+        <div class="countdown-card">
+          <div class="countdown-label">Match Loading</div>
+          <div class="countdown-number" id="mp-countdown-number"></div>
+          <div class="countdown-tip">Syncing players…</div>
+        </div>
+      </div>
+      <div id="mp-end" class="end-overlay hidden">
+        <div class="end-card">
+          <div class="end-title" id="mp-end-title">Match Over</div>
+          <div class="end-winner" id="mp-end-winner">Winner</div>
+          <div class="end-subtitle" id="mp-end-subtitle">Duel • Sprint</div>
+          <div class="end-stats-grid">
+            <div class="end-stats-col">
+              <div class="end-stat-title" id="mp-end-your-title">Your Stats</div>
+              <div class="end-stat" id="mp-end-your-name">Name: --</div>
+              <div class="end-stat" id="mp-end-your-time">Time: --</div>
+              <div class="end-stat" id="mp-end-your-solved">Solved: --</div>
+              <div class="end-stat" id="mp-end-your-words">Words: --</div>
+              <div class="end-stat" id="mp-end-your-points">Points: --</div>
+            </div>
+            <div class="end-stats-col">
+              <div class="end-stat-title" id="mp-end-opponent-title">Opponent Stats</div>
+              <div class="end-stat" id="mp-end-opponent-name">Name: --</div>
+              <div class="end-stat" id="mp-end-opponent-time">Time: --</div>
+              <div class="end-stat" id="mp-end-opponent-solved">Solved: --</div>
+              <div class="end-stat" id="mp-end-opponent-words">Words: --</div>
+              <div class="end-stat" id="mp-end-opponent-points">Points: --</div>
+            </div>
+          </div>
+          <div class="round-table-wrap hidden" id="mp-end-round-wrap">
+            <table class="round-table">
+              <thead>
+                <tr>
+                  <th>Player</th>
+                  <th>Round 1</th>
+                  <th>Round 2</th>
+                  <th>Round 3</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody id="mp-end-round-table-body"></tbody>
+            </table>
+          </div>
+          <button class="menu-btn" id="btn-mp-end-menu">Back to Menu</button>
+        </div>
+      </div>
+      <div id="mp-wait" class="end-overlay hidden">
+        <div class="end-card">
+          <div class="end-title">Waiting Room</div>
+          <div class="end-winner">You Finished</div>
+          <div class="end-subtitle">Waiting for opponent to finish…</div>
+        </div>
+      </div>
+      <div id="mp-round" class="end-overlay hidden">
+        <div class="end-card">
+          <div class="end-title" id="mp-round-title">Round Complete</div>
+          <div class="end-subtitle" id="mp-round-subtitle">Ready for next round?</div>
+          <div class="round-table-wrap">
+            <table class="round-table">
+              <thead>
+                <tr>
+                  <th>Player</th>
+                  <th>Round 1</th>
+                  <th>Round 2</th>
+                  <th>Round 3</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody id="mp-round-table-body"></tbody>
+            </table>
+          </div>
+          <button class="menu-btn" id="btn-mp-round-ready">Ready</button>
+        </div>
+      </div>
+      <br />
+      <button class="back-btn" id="btn-mp-leave">Leave Match</button>
+    </div>
+
+    <!-- ================= GAMEBOARD ================= -->
+    <div id="gameboard" class="hidden">
+      <h1 id="daily-title">Word of the Day</h1>
+      <div id="grid" class="board-grid"></div>
+
+      <div id="messages" class="board-messages"></div>
+      <div id="endgame"></div>
+      <div class="divider"></div>
+
+      <div id="keyboard" class="board-keyboard">
+        <div id="kb-row-1"></div>
+        <div id="kb-row-2"></div>
+        <div id="kb-row-3"></div>
+      </div>
+
+      <div id="countdown" class="countdown-overlay">
+        <div class="countdown-card">
+          <div class="countdown-label">Daily Puzzle</div>
+          <div class="countdown-number" id="countdown-number"></div>
+          <div class="countdown-tip">Get your first guess ready</div>
+        </div>
+      </div>
+      <br>
+      <button class="back-btn" id="btn-back">Back</button>
+    </div>
+
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
