@@ -9,7 +9,14 @@ Live Demo: https://jumble-55i1.onrender.com/
 Note: The live demo is hosted on the Render free tier, so the server may take 30–60 seconds to start if inactive.
 
 ## Screenshots
+### Single Player Mode
+![Single Player](screenshots/singleplayer.png)
 
+### Multiplayer Waiting Room
+![Waiting Room](screenshots/waitingroom.png)
+
+### Sprint Mode Gameplay
+![Sprint Mode](screenshots/sprintmode.png)
 
 ## Features
 	•	Daily Word of the Day puzzle
@@ -57,4 +64,13 @@ source venv/bin/activate(Mac/Linux) or venv\Scripts\activate(Windows)
 #### 4. Install Dependencies
 pip install -r requirements.txt
 #### 5. Start the Backend server
-uvicorn main:app --reload
+uvicorn app:app --reload
+#### 6. Open the Frontend
+
+## Author
+### Zorawar Gill
+
+
+Computer Engineering Student
+
+University of Alberta
